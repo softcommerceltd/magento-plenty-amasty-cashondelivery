@@ -1,7 +1,7 @@
 ## Changelog
 
 ### Version 1.0.1
-- **Compatibility**: Composer updates.
+- **Compatibility**: Compatibility with PHP 8.0||8.1
 
 ### Version 1.0.0
 - **Feature**: [M2PO-41] Amasty Cash On Delivery add-on to order export.
