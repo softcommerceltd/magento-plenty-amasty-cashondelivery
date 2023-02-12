@@ -35,36 +35,53 @@ use SoftCommerce\Profile\Model\ServiceAbstract\ProcessorInterface;
 
 /**
  * @inheritdoc
- * Class GiftCard used to export
- * Amasty Gift Cards
+ * Class CashOnDeliveryItem used to export
+ * Amasty Cash On Delivery payment fee
  */
 class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
 {
     /**
      * @var ConfigProvider
      */
-    private $config;
+    private ConfigProvider $config;
 
     /**
      * @var PaymentFeeRepositoryInterface
      */
-    private $paymentFeeRepository;
+    private PaymentFeeRepositoryInterface $paymentFeeRepository;
 
     /**
      * @var Calculation
      */
-    private $taxCalculation;
+    private Calculation $taxCalculation;
 
     /**
      * @var float|null
      */
-    private $taxRate;
+    private ?float $taxRate = null;
 
+    /**
+     * @param Calculation $taxCalculation
+     * @param ConfigProvider $config
+     * @param PaymentFeeRepositoryInterface $paymentFeeRepository
+     * @param GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection
+     * @param GetSalesOrderTaxRateInterface $getSalesOrderTaxRate
+     * @param GetSkuFromOrderItemInterface $getSkuFromOrderItem
+     * @param GetSourceCodeByShipmentId $getSourceCodeByShipmentIdRepository
+     * @param SalesOrderReservationRepositoryInterface $salesOrderReservationRepository
+     * @param SearchMultidimensionalArrayInterface $searchMultidimensionalArray
+     * @param ScopeConfigInterface $scopeConfig
+     * @param ShippingCountryRepositoryInterface $shippingCountryRepository
+     * @param StockConfigInterfaceFactory $stockConfigFactory
+     * @param DataStorageInterfaceFactory $dataStorageFactory
+     * @param MessageStorageInterfaceFactory $messageStorageFactory
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param array $data
+     */
     public function __construct(
         Calculation $taxCalculation,
         ConfigProvider $config,
         PaymentFeeRepositoryInterface $paymentFeeRepository,
-
         GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection,
         GetSalesOrderTaxRateInterface $getSalesOrderTaxRate,
         GetSkuFromOrderItemInterface $getSkuFromOrderItem,
