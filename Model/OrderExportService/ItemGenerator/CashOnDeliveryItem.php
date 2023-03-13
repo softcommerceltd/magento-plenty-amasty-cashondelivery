@@ -28,7 +28,9 @@ use SoftCommerce\PlentyOrder\Model\GetSalesOrderTaxRateInterface;
 use SoftCommerce\PlentyOrder\Model\SalesOrderReservationRepositoryInterface;
 use SoftCommerce\PlentyOrderClient\Api\ShippingCountryRepositoryInterface;
 use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Generator\Order\Items\ItemAbstract;
+use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Processor\Order as OrderProcessor;
 use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpClient;
+use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpOrderClient;
 use SoftCommerce\PlentyStock\Model\GetOrderItemSourceSelectionInterface;
 use SoftCommerce\PlentyStockProfile\Model\Config\StockConfigInterfaceFactory;
 use SoftCommerce\Profile\Model\ServiceAbstract\ProcessorInterface;
@@ -156,36 +158,24 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
             HttpClient::IS_PERCENTAGE => false
         ];
 
-        $this->getRequestStorage()->addData(
+        $referrerId = (float) $context->storeConfig()->getReferrerIdByStoreId(
+            (int) $context->getSalesOrder()->getStoreId()
+        );
+
+        $context->getRequestStorage()->addData(
             [
                 HttpClient::TYPE_ID => HttpClient::ITEM_TYPE_UNASSIGNED_VARIATION,
                 HttpClient::ITEM_VARIATION_ID => -2,
-                HttpClient::REFERRER_ID => $context->orderConfig()->getOrderReferrerId($salesOrder->getStoreId()),
+                HttpClient::REFERRER_ID => $referrerId,
                 HttpClient::QUANTITY => 1,
                 HttpClient::COUNTRY_VAT_ID => $this->getCountryId($salesOrder->getBillingAddress()->getCountryId()),
                 HttpClient::VAT_FIELD => 0,
                 HttpClient::VAT_RATE => $this->getVatRate(),
                 HttpClient::ORDER_ITEM_NAME => $this->config->getPaymentFeeLabel() ?: __('Cash On Delivery Fee'),
                 HttpClient::AMOUNTS => $amounts,
-            ]
+            ],
+            [OrderProcessor::TYPE_ID, HttpOrderClient::ORDER_ITEMS]
         );
-    }
-
-    /**
-     * @return bool
-     * @throws LocalizedException
-     */
-    private function canGenerate(): bool
-    {
-        $salesOrder = $this->getContext()->getSalesOrder();
-        if (!$this->config->isPaymentFeeEnabled($salesOrder->getStoreId())
-            || !$this->config->isCashOnDeliveryEnabled($salesOrder->getStoreId())
-        ) {
-            return false;
-        }
-
-        return $salesOrder->getPayment()
-            && $salesOrder->getPayment()->getMethod() === Cashondelivery::PAYMENT_METHOD_CASHONDELIVERY_CODE;
     }
 
     /**
@@ -242,6 +232,23 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
         return $this->isPercentageIncludingTax($storeId)
             ? $this->getSalesOrderTaxRate->getTaxRate((int) $context->getSalesOrder()->getEntityId())
             : 0;
+    }
+
+    /**
+     * @return bool
+     * @throws LocalizedException
+     */
+    private function canGenerate(): bool
+    {
+        $salesOrder = $this->getContext()->getSalesOrder();
+        if (!$this->config->isPaymentFeeEnabled($salesOrder->getStoreId())
+            || !$this->config->isCashOnDeliveryEnabled($salesOrder->getStoreId())
+        ) {
+            return false;
+        }
+
+        return $salesOrder->getPayment()
+            && $salesOrder->getPayment()->getMethod() === Cashondelivery::PAYMENT_METHOD_CASHONDELIVERY_CODE;
     }
 
     /**

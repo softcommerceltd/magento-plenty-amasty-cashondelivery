@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.3
+- **Compatibility**: Compatibility with `SoftCommerce_PlentyOrderProfile` version 1.4.4.
+
 ### Version 1.0.2
 - **Compatibility**: Compatibility with `SoftCommerce_PlentyOrderProfile` version 1.4.2.
 
