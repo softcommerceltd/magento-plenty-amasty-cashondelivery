@@ -1,0 +1,22 @@
+name: Automated Release
+on:
+  push:
+    branches:
+      - "master"
+    paths-ignore:
+      - '.github/*'
+      - '.gitignore'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "1.0.3"
+          tag_name: 1.0.3
+          body: "latest"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
