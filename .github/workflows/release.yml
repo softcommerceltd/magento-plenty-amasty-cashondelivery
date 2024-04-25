@@ -12,8 +12,10 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "1.0.3"
-          tag_name: 1.0.3
-          body: "latest"
+          name: 1.0.4 [CE|EE|ECE 2.4.0-2.4.7] 25 Apr 2024
+          tag_name: 1.0.4
+          body: |-
+            ### softcommerce/module-plenty-amasty-cashondelivery [1.0.4]
+            - **Compatibility**: Compatibility with PHP 8.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.4
+- **Compatibility**: Compatibility with PHP 8.3
+
 ### Version 1.0.3
 - **Compatibility**: Compatibility with `SoftCommerce_PlentyOrderProfile` version 1.4.4.
 
