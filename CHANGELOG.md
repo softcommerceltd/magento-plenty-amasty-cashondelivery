@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.5
+- **Compatibility**: Added compatibility for PHP 8.4 and Magento 2.4.8-beta
+
 ### Version 1.0.4
 - **Compatibility**: Compatibility with PHP 8.3
 
