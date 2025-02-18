@@ -4,7 +4,7 @@
     "require": {
         "php": "~8.0.0||~8.1.0||~8.2.0||~8.3.0||~8.4.0",
         "softcommerce/module-plenty-item-profile": "*",
-        "softcommerce/module-plenty-order-profile": "*"
+        "softcommerce/module-plenty-order-profile": "^1.9.1"
     },
     "type": "magento2-module",
     "license": [
@@ -19,5 +19,5 @@
             "SoftCommerce\\PlentyAmastyCashOnDelivery\\": ""
         }
     },
-    "version": "1.0.5"
+    "version": "1.0.6"
 }

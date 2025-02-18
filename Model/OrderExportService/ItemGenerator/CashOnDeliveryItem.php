@@ -32,6 +32,7 @@ use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Processor\Order as 
 use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpClient;
 use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpOrderClient;
 use SoftCommerce\PlentyStock\Model\GetOrderItemSourceSelectionInterface;
+use SoftCommerce\PlentyStock\Model\GetStockItemConfigurationInterface;
 use SoftCommerce\PlentyStockProfile\Model\Config\StockConfigInterfaceFactory;
 use SoftCommerce\Profile\Model\ServiceAbstract\ProcessorInterface;
 
@@ -67,6 +68,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
      * @param ConfigProvider $config
      * @param PaymentFeeRepositoryInterface $paymentFeeRepository
      * @param GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection
+     * @param GetStockItemConfigurationInterface $getStockItemConfiguration
      * @param GetSalesOrderTaxRateInterface $getSalesOrderTaxRate
      * @param GetSkuFromOrderItemInterface $getSkuFromOrderItem
      * @param GetSourceCodeByShipmentId $getSourceCodeByShipmentIdRepository
@@ -85,6 +87,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
         ConfigProvider $config,
         PaymentFeeRepositoryInterface $paymentFeeRepository,
         GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection,
+        GetStockItemConfigurationInterface $getStockItemConfiguration,
         GetSalesOrderTaxRateInterface $getSalesOrderTaxRate,
         GetSkuFromOrderItemInterface $getSkuFromOrderItem,
         GetSourceCodeByShipmentId $getSourceCodeByShipmentIdRepository,
@@ -103,6 +106,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
         $this->paymentFeeRepository = $paymentFeeRepository;
         parent::__construct(
             $getOrderItemSourceSelection,
+            $getStockItemConfiguration,
             $getSalesOrderTaxRate,
             $getSkuFromOrderItem,
             $getSourceCodeByShipmentIdRepository,

@@ -1,5 +1,8 @@
 ## Changelog
 
+### Version 1.0.6
+- **Enhancement**: Compatibility with [Optimised stock source assignment](https://github.com/softcommerceltd/mage2plenty-os/issues/48)
+
 ### Version 1.0.5
 - **Compatibility**: Added compatibility for PHP 8.4 and Magento 2.4.8-beta
 
