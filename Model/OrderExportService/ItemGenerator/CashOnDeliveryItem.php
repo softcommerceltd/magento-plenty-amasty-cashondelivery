@@ -22,15 +22,16 @@ use Magento\InventoryShipping\Model\ResourceModel\ShipmentSource\GetSourceCodeBy
 use Magento\OfflinePayments\Model\Cashondelivery;
 use Magento\Tax\Model\Calculation;
 use SoftCommerce\Core\Framework\DataStorageInterfaceFactory;
+use SoftCommerce\Core\Framework\MessageCollectorInterfaceFactory;
 use SoftCommerce\Core\Framework\MessageStorageInterfaceFactory;
 use SoftCommerce\Core\Framework\SearchMultidimensionalArrayInterface;
 use SoftCommerce\PlentyOrder\Model\GetSalesOrderTaxRateInterface;
 use SoftCommerce\PlentyOrder\Model\SalesOrderReservationRepositoryInterface;
-use SoftCommerce\PlentyOrderClient\Api\ShippingCountryRepositoryInterface;
+use SoftCommerce\PlentyClient\Model\Config\ShippingCountryRepositoryInterface;
 use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Generator\Order\Items\ItemAbstract;
 use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Processor\Order as OrderProcessor;
-use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpClient;
-use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpOrderClient;
+use SoftCommerce\PlentyOrder\RestApi\OrderInterface as HttpClient;
+use SoftCommerce\PlentyOrder\RestApi\OrderInterface as HttpOrderClient;
 use SoftCommerce\PlentyStock\Model\GetOrderItemSourceSelectionInterface;
 use SoftCommerce\PlentyStock\Model\GetStockItemConfigurationInterface;
 use SoftCommerce\PlentyStockProfile\Model\Config\StockConfigInterfaceFactory;
@@ -78,6 +79,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
      * @param ShippingCountryRepositoryInterface $shippingCountryRepository
      * @param StockConfigInterfaceFactory $stockConfigFactory
      * @param DataStorageInterfaceFactory $dataStorageFactory
+     * @param MessageCollectorInterfaceFactory $messageCollectorFactory
      * @param MessageStorageInterfaceFactory $messageStorageFactory
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param array $data
@@ -97,6 +99,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
         ShippingCountryRepositoryInterface $shippingCountryRepository,
         StockConfigInterfaceFactory $stockConfigFactory,
         DataStorageInterfaceFactory $dataStorageFactory,
+        MessageCollectorInterfaceFactory $messageCollectorFactory,
         MessageStorageInterfaceFactory $messageStorageFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         array $data = []
@@ -116,6 +119,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
             $shippingCountryRepository,
             $stockConfigFactory,
             $dataStorageFactory,
+            $messageCollectorFactory,
             $messageStorageFactory,
             $searchCriteriaBuilder,
             $data
