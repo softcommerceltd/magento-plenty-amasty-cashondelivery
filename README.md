@@ -1,5 +1,5 @@
 ## About
-PlentyMarkets Connector - Amasty Cash On Delivery add-on.
+PlentyONE Connector - Amasty Cash On Delivery add-on.
 
 ## Purpose
 Used to extend order totals.
