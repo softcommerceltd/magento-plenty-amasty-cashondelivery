@@ -22,15 +22,15 @@ use Magento\InventoryShipping\Model\ResourceModel\ShipmentSource\GetSourceCodeBy
 use Magento\OfflinePayments\Model\Cashondelivery;
 use Magento\Tax\Model\Calculation;
 use SoftCommerce\Core\Framework\DataStorageInterfaceFactory;
-use SoftCommerce\Core\Framework\MessageStorageInterfaceFactory;
+use SoftCommerce\Core\Framework\MessageCollectorInterfaceFactory;
 use SoftCommerce\Core\Framework\SearchMultidimensionalArrayInterface;
 use SoftCommerce\PlentyOrder\Model\GetSalesOrderTaxRateInterface;
 use SoftCommerce\PlentyOrder\Model\SalesOrderReservationRepositoryInterface;
-use SoftCommerce\PlentyOrderClient\Api\ShippingCountryRepositoryInterface;
+use SoftCommerce\PlentyClient\Api\Config\ShippingCountryRepositoryInterface;
 use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Generator\Order\Items\ItemAbstract;
 use SoftCommerce\PlentyOrderProfile\Model\OrderExportService\Processor\Order as OrderProcessor;
-use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpClient;
-use SoftCommerce\PlentyOrderRestApi\Model\OrderInterface as HttpOrderClient;
+use SoftCommerce\PlentyOrder\RestApi\OrderInterface as HttpClient;
+use SoftCommerce\PlentyOrder\RestApi\OrderInterface as HttpOrderClient;
 use SoftCommerce\PlentyStock\Model\GetOrderItemSourceSelectionInterface;
 use SoftCommerce\PlentyStock\Model\GetStockItemConfigurationInterface;
 use SoftCommerce\PlentyStockProfile\Model\Config\StockConfigInterfaceFactory;
@@ -43,21 +43,6 @@ use SoftCommerce\Profile\Model\ServiceAbstract\ProcessorInterface;
  */
 class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
 {
-    /**
-     * @var ConfigProvider
-     */
-    private ConfigProvider $config;
-
-    /**
-     * @var PaymentFeeRepositoryInterface
-     */
-    private PaymentFeeRepositoryInterface $paymentFeeRepository;
-
-    /**
-     * @var Calculation
-     */
-    private Calculation $taxCalculation;
-
     /**
      * @var float|null
      */
@@ -78,14 +63,14 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
      * @param ShippingCountryRepositoryInterface $shippingCountryRepository
      * @param StockConfigInterfaceFactory $stockConfigFactory
      * @param DataStorageInterfaceFactory $dataStorageFactory
-     * @param MessageStorageInterfaceFactory $messageStorageFactory
+     * @param MessageCollectorInterfaceFactory $messageCollectorFactory
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param array $data
      */
     public function __construct(
-        Calculation $taxCalculation,
-        ConfigProvider $config,
-        PaymentFeeRepositoryInterface $paymentFeeRepository,
+        private Calculation $taxCalculation,
+        private ConfigProvider $config,
+        private PaymentFeeRepositoryInterface $paymentFeeRepository,
         GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection,
         GetStockItemConfigurationInterface $getStockItemConfiguration,
         GetSalesOrderTaxRateInterface $getSalesOrderTaxRate,
@@ -97,13 +82,10 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
         ShippingCountryRepositoryInterface $shippingCountryRepository,
         StockConfigInterfaceFactory $stockConfigFactory,
         DataStorageInterfaceFactory $dataStorageFactory,
-        MessageStorageInterfaceFactory $messageStorageFactory,
+        MessageCollectorInterfaceFactory $messageCollectorFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         array $data = []
     ) {
-        $this->taxCalculation = $taxCalculation;
-        $this->config = $config;
-        $this->paymentFeeRepository = $paymentFeeRepository;
         parent::__construct(
             $getOrderItemSourceSelection,
             $getStockItemConfiguration,
@@ -116,7 +98,7 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
             $shippingCountryRepository,
             $stockConfigFactory,
             $dataStorageFactory,
-            $messageStorageFactory,
+            $messageCollectorFactory,
             $searchCriteriaBuilder,
             $data
         );

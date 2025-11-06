@@ -1,10 +1,10 @@
 {
     "name": "softcommerce/module-plenty-amasty-cashondelivery",
-    "description": "PlentyMarkets Connector - Amasty Cash On Delivery add-ons.",
+    "description": "PlentyONE Connector - Amasty Cash On Delivery add-ons.",
     "require": {
-        "php": "~8.0.0||~8.1.0||~8.2.0||~8.3.0||~8.4.0",
+        "php": "~8.1.0||~8.2.0||~8.3.0||~8.4.0",
         "softcommerce/module-plenty-item-profile": "*",
-        "softcommerce/module-plenty-order-profile": "^1.9.1"
+        "softcommerce/module-plenty-order-profile": "^2.0.0"
     },
     "type": "magento2-module",
     "license": [
