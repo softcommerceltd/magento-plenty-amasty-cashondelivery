@@ -68,9 +68,9 @@ class CashOnDeliveryItem extends ItemAbstract implements ProcessorInterface
      * @param array $data
      */
     public function __construct(
-        private Calculation $taxCalculation,
-        private ConfigProvider $config,
-        private PaymentFeeRepositoryInterface $paymentFeeRepository,
+        private readonly Calculation $taxCalculation,
+        private readonly ConfigProvider $config,
+        private readonly PaymentFeeRepositoryInterface $paymentFeeRepository,
         GetOrderItemSourceSelectionInterface $getOrderItemSourceSelection,
         GetStockItemConfigurationInterface $getStockItemConfiguration,
         GetSalesOrderTaxRateInterface $getSalesOrderTaxRate,
